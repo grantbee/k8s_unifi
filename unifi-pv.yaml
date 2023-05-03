@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: unifi-pv
+  namespace: unifi
+  labels:
+    type: local
+spec:
+  storageClassName: local-path
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /k8s_stor/unifi
+  persistentVolumeReclaimPolicy: Retain
+  volumeMode: Filesystem

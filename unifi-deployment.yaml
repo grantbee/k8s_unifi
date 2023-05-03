@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.24.0 (4a2a0458)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: unifi-controller
+  name: unifi-controller
+  namespace: unifi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: unifi-controller
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  minReadySeconds: 5 
+  revisionHistoryLimit: 5
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.24.0 (4a2a0458)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: unifi-controller
+    spec:
+      containers:
+        - env:
+            # - name: MEM_LIMIT
+            #   value: 2048M
+            # - name: MEM_STARTUP
+            #   value: 2048M
+          # image: lscr.io/linuxserver/unifi-controller:7.3.76
+          image: lscr.io/linuxserver/unifi-controller:7.3.83
+          imagePullPolicy: IfNotPresent
+          name: unifi-controller
+          ports:
+            - containerPort: 6789
+            - containerPort: 8080
+            - containerPort: 8443
+            - containerPort: 8843
+            - containerPort: 8880
+            - containerPort: 3478
+              protocol: UDP
+            - containerPort: 5353
+              protocol: UDP
+            - containerPort: 5514
+              protocol: UDP
+          resources: {}
+          volumeMounts:
+            - mountPath: /config
+              name: unifi-pvc
+      restartPolicy: Always
+      volumes:
+        - name: unifi-pvc
+          persistentVolumeClaim:
+            claimName: unifi-pvc
+status: {}

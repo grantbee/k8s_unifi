@@ -1,0 +1,21 @@
+## Update deployment to use new image:
+
+# To list a pod's container image you can:
+kubectl -n unifi get pods -o jsonpath="{.items[*].spec.containers[*].image}"
+
+# Use the following command to update the deployment to use a new (or the latest) image:
+kubectl set image deployment unifi-controller unifi-controller=lscr.io/linuxserver/unifi-controller:6.4.54
+
+# Or you can update the deployment yaml file image definition tag value and then run:
+kubectl apply -f unifi-deployment.yaml
+
+# To interrogate rollout history you can:
+kubectl rollout history deployment unifi-controller -n unifi
+# To look into a specific revision you can then:
+kubectl rollout history deployment unifi-controller -n unifi --revision 1
+
+# To check the rollout status
+kubectl -n unifi rollout status deployment unifi-controller
+
+##
+
