@@ -6,9 +6,39 @@ on:
     branches:
       - main
 
+env:
+  KUBE_CONFIG: ${{ secrets.RUNNER_KUBE_CONFIG }}
+
 jobs:
   deploy:
-    runs-on: "self-hosted"
+    runs-on: self-hosted
+
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Deploy Unifi App Namespace
+        uses: actions-hub/kubectl@master
+        with:
+          args: apply -f unifi-namespace.yml
+
+      - name: Deploy Unifi App Volume
+        uses: actions-hub/kubectl@master
+        with:
+          args: apply -f unifi-pv.yml
+
+      - name: Deploy Unifi App Volume Claim
+        uses: actions-hub/kubectl@master
+        with:
+          args: apply -f unifi-pvc.yml
+
+      - name: Deploy Unifi App Load Balancer Service
+        uses: actions-hub/kubectl@master
+        with:
+          args: apply -f unifi-lb-service.yml
+
+      - name: Deploy Unifi App Deployment
+        uses: actions-hub/kubectl@master
+        with:
+          args: apply -f unifi-deployment.yml
+...
