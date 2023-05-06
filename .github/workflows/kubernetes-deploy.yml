@@ -20,25 +20,25 @@ jobs:
       - name: Deploy Unifi App Namespace
         uses: actions-hub/kubectl@master
         with:
-          args: apply -f unifi-namespace.yml
+          args: apply -f unifi-namespace.yaml
 
       - name: Deploy Unifi App Volume
         uses: actions-hub/kubectl@master
         with:
-          args: apply -f unifi-pv.yml
+          args: apply -f unifi-pv.yaml
 
       - name: Deploy Unifi App Volume Claim
         uses: actions-hub/kubectl@master
         with:
-          args: apply -f unifi-pvc.yml
+          args: apply -f unifi-pvc.yaml
 
       - name: Deploy Unifi App Load Balancer Service
         uses: actions-hub/kubectl@master
         with:
-          args: apply -f unifi-lb-service.yml
+          args: apply -f unifi-lb-service.yaml
 
       - name: Deploy Unifi App Deployment
         uses: actions-hub/kubectl@master
         with:
-          args: apply -f unifi-deployment.yml
+          args: apply -f unifi-deployment.yaml
 ...
