@@ -7,7 +7,7 @@ on:
       - main
 
 env:
-  KUBE_CONFIG: ${{ secrets.RUNNER_KUBE_CONFIG }}
+  KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
 
 jobs:
   deploy:
